@@ -31,10 +31,12 @@
         "no-use-before-define": "off",
         "import/prefer-default-export": "warn",
         "@typescript-eslint/no-use-before-define": ["error"],
-        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-unused-vars": 0,
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-var-requires": "warn",
+        "no-unused-vars":0,
         // react
+        "no-console":0,
         "react/require-default-props": 0,
         "react/button-has-type": 0,
         "react/no-children-prop": 0,
