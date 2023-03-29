@@ -1,19 +1,31 @@
 import { Box, Container } from '@mui/material';
-import { useContext, useState } from 'react';
-import routeContext, { Provider as RouteProvider } from './contexts/routeContext';
+import { useContext, useEffect, useState } from 'react';
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import LoginContext from './contexts/loginContext';
+import { useAuth } from './hooks';
 import Router from './routes';
+
 import { ROUTE_NAMES } from './routes/routeNames';
+import { User } from './types';
 
 function App() {
   console.log(window.ipcRenderer);
-  const [route, setRoute] = useState(ROUTE_NAMES.HOME);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation()
+
+  useEffect(() => {
+    if (!user.isAuth) {
+      navigate(ROUTE_NAMES.LOGIN);
+    }
+  }, [user]);
+
+  console.log(location.pathname)
 
   return (
-    <RouteProvider value={{ route, setRoute }}>
-      <Container sx={{ width: 1, height: '100%' }}>
-        <Router route={route} />
-      </Container>
-    </RouteProvider>
+    <LoginContext value={{ user }}>
+      <Router />
+    </LoginContext>
   );
 }
 

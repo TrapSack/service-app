@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": ["vite/client", "node"],
@@ -14,7 +15,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@Assets/*": ["./src/assets/*"],
+      "@Hooks/*": ["./src/hooks"],
+      "@Context/*": ["./src/contexts"],
+      "@Pages/*": ["./src/pages"],
+      "@Types/*": ["./src/types"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts", "**/*.tsx", "**/*.js"]
