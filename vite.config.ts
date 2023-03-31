@@ -10,7 +10,8 @@ const aliases = {
   '@Hooks': resolve('./src/hooks'),
   '@Context': resolve('./src/contexts'),
   '@Pages': resolve('./src/pages'),
-  '@Types': resolve('./src/types')
+  '@Types': resolve('./src/types'),
+  '@Components': resolve('./src/components')
 };
 
 export default ({ command }: ConfigEnv): UserConfig => {
