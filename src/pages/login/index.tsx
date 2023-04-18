@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import bgImage from '../../assets/img/login-bg.png'
 import { Box, Container, Grow } from '@mui/material';
 import bgImage from '@Assets/img/login-bg.jpeg';
 import { Button, Input } from '@Components/';
+import { api } from '../../api';
 
 export default function LoginPage() {
-  console.log(bgImage);
+  const [loading, setLoading] = useState(false);
+
+  const submit = async () => {
+    setLoading(true);
+
+    api.testGet().then((value) => {
+      console.log(value);
+      setLoading(false);
+    });
+  };
+
   return (
     <>
       <Box
@@ -56,7 +67,9 @@ export default function LoginPage() {
             </Box>
             <Input name="login" onChange={() => null} placeholder="Login" value="" type="text" />
             <Input name="login" onChange={() => null} placeholder="Password" value="" type="text" />
-            <Button>Sign in</Button>
+            <Button onClick={() => submit()} isLoading={loading}>
+              Sign in
+            </Button>
           </Box>
         </Box>
       </Grow>

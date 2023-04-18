@@ -1,4 +1,4 @@
-import { ButtonBase, ButtonBaseProps, SxProps, Theme } from '@mui/material';
+import { ButtonBase, ButtonBaseProps, CircularProgress, SxProps, Theme } from '@mui/material';
 import { useMemo } from 'react';
 
 type ButtonType = 'default';
@@ -7,9 +7,10 @@ type ButtonProps = Pick<ButtonBaseProps, 'onClick' | 'type' | 'sx'> & {
   title?: string;
   children?: Element | Element[] | string;
   buttonType?: ButtonType;
+  isLoading?: boolean;
 };
 
-export function Button({ children, onClick, title, type, sx, buttonType = 'default' }: ButtonProps) {
+export function Button({ children, onClick, title, type, sx, buttonType = 'default', isLoading }: ButtonProps) {
   const defaultButton: SxProps<Theme> = {
     display: 'flex',
     alignItems: 'center',
@@ -41,6 +42,7 @@ export function Button({ children, onClick, title, type, sx, buttonType = 'defau
   return (
     <ButtonBase onClick={onClick} type={type} sx={style}>
       {children || title || ''}
+      {isLoading && <CircularProgress />}
     </ButtonBase>
   );
 }
