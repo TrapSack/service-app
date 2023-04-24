@@ -8,18 +8,31 @@ type ButtonProps = Pick<ButtonBaseProps, 'onClick' | 'type' | 'sx'> & {
   children?: Element | Element[] | string;
   buttonType?: ButtonType;
   isLoading?: boolean;
+  size?: 'sm' | 'md' | 'lg';
 };
 
-export function Button({ children, onClick, title, type, sx, buttonType = 'default', isLoading }: ButtonProps) {
+export function Button({
+  children,
+  onClick,
+  title,
+  type,
+  sx,
+  buttonType = 'default',
+  isLoading,
+  size = 'md'
+}: ButtonProps) {
+  const buttonSize = {
+    padding: size === 'sm' ? '8px 0' : '12px 0',
+    width: size === 'sm' ? '60%' : '100%'
+  };
+
   const defaultButton: SxProps<Theme> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '12px 0',
     backgroundColor: '#434C57',
     color: '#fff',
     borderRadius: '4px',
-    width: '100%',
     fontSize: '18px',
     transition: 'all 0.2s ease',
 
@@ -27,7 +40,6 @@ export function Button({ children, onClick, title, type, sx, buttonType = 'defau
       backgroundColor: '#2E353E'
     }
   };
-
   const buttonStyle = useMemo(() => {
     switch (buttonType) {
       case 'default':
@@ -37,7 +49,7 @@ export function Button({ children, onClick, title, type, sx, buttonType = 'defau
     }
   }, [buttonType]);
 
-  const style = Object.assign(buttonStyle, sx);
+  const style = Object.assign(buttonStyle, sx, buttonSize);
 
   return (
     <ButtonBase onClick={onClick} type={type} sx={style}>

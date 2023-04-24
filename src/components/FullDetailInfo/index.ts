@@ -1,0 +1,1 @@
+export { FullDetailInfo } from './FullDetailInfo';

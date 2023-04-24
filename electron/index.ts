@@ -18,6 +18,8 @@ function createWindow() {
     show: true,
     resizable: true,
     fullscreenable: true,
+    minWidth: 612,
+    minHeight: 700,
     webPreferences: {
       preload: join(__dirname, 'preload.js')
     }

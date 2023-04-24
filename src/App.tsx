@@ -1,31 +1,28 @@
-import { Box, Container } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import LoginContext from './contexts/loginContext';
-import { useAuth } from './hooks';
+import { Box } from '@mui/system';
+import { useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Appbar } from './components/Appbar/Appbar';
+import { ScrollContextProvider } from './contexts/scrollContext';
 import Router from './routes';
-
-import { ROUTE_NAMES } from './routes/routeNames';
-import { User } from './types';
 
 function App() {
   console.log(window.ipcRenderer);
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
+  const boxRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!user.isAuth) {
-      navigate(ROUTE_NAMES.LOGIN);
-    }
-  }, [user]);
+  const scrollToTop = () => {
+    boxRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  console.log(location.pathname)
+  console.log(location.pathname);
 
   return (
-    <LoginContext value={{ user }}>
-      <Router />
-    </LoginContext>
+    <ScrollContextProvider value={{ scrollToTop }}>
+      <Appbar />
+      <Box sx={{ overflow: 'auto', height: '100%' }} ref={boxRef}>
+        <Router />
+      </Box>
+    </ScrollContextProvider>
   );
 }
 

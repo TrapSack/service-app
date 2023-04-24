@@ -18,11 +18,11 @@
     "jsx": "react-jsx",
     "paths": {
       "@Assets/*": ["./src/assets/*"],
-      "@Hooks/*": ["./src/hooks"],
-      "@Context/*": ["./src/contexts"],
-      "@Pages/*": ["./src/pages"],
-      "@Types/*": ["./src/types"],
-      "@Components/*": ["./src/components"]
+      "@Hooks/*": ["./src/hooks/*"],
+      "@Context/*": ["./src/contexts/*"],
+      "@Pages/*": ["./src/pages/*"],
+      "@Types/*": ["./src/types/*"],
+      "@Components/*": ["./src/components/*"]
     }
   },
   "exclude": ["node_modules"],

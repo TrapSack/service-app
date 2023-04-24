@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import bgImage from '../../assets/img/login-bg.png'
 import { Box, Container, Grow } from '@mui/material';
 import bgImage from '@Assets/img/login-bg.jpeg';
-import { Button, Input } from '@Components/';
+import { Button, Input } from '@Components/index';
 import { api } from '../../api';
 
 export default function LoginPage() {
@@ -10,11 +10,6 @@ export default function LoginPage() {
 
   const submit = async () => {
     setLoading(true);
-
-    api.testGet().then((value) => {
-      console.log(value);
-      setLoading(false);
-    });
   };
 
   return (
