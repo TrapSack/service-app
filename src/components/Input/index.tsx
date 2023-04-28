@@ -1,6 +1,6 @@
-import { InputBase } from '@mui/material';
+import { InputBase, InputBaseProps, Tooltip } from '@mui/material';
 import { borderRadius, Box, SxConfig, SxProps, Theme } from '@mui/system';
-import React from 'react';
+import React, { useState } from 'react';
 
 type InputProps = Required<
   Pick<
@@ -9,9 +9,11 @@ type InputProps = Required<
   >
 > & {
   sx?: SxProps<Theme>;
-};
+} & InputBaseProps;
 
-export function Input({ name, onChange, placeholder, type, value, sx }: InputProps) {
+export function Input({ name, onChange, placeholder, type, value, sx, ...other }: InputProps) {
+  const [openToolTip, setOpenToolTip] = useState(false);
+
   const defaultStyleConfig: SxProps<Theme> = {
     width: '100%',
     'input::placeholder': {
@@ -22,15 +24,37 @@ export function Input({ name, onChange, placeholder, type, value, sx }: InputPro
 
   const styleConfig = Object.assign(defaultStyleConfig, sx);
 
+  const onTooltipOpen = () => {
+    setOpenToolTip(true);
+  };
+
+  const onTooltipClose = () => {
+    setOpenToolTip(false);
+  };
+
   return (
-    <Box
-      sx={{
-        padding: '12px 24px',
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderRadius: '4px'
-      }}
+    <Tooltip
+      open={openToolTip}
+      title="PZASKALSJGPSGPKASPOKGPAGSOKPASGOPKGASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
     >
-      <InputBase name={name} onChange={onChange} placeholder={placeholder} type={type} value={value} sx={styleConfig} />
-    </Box>
+      <Box
+        sx={{
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '4px'
+        }}
+      >
+        <InputBase
+          name={name}
+          onChange={onChange}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          sx={styleConfig}
+          onFocus={onTooltipOpen}
+          onBlur={onTooltipClose}
+          {...other}
+        />
+      </Box>
+    </Tooltip>
   );
 }

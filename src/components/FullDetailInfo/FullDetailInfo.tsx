@@ -1,7 +1,7 @@
 import { Collapse, Grid, Table } from '@mui/material';
 import { Box } from '@mui/system';
-import { Dispatch, SetStateAction } from 'react';
-import { ITableDetail } from 'src/api/interfaces';
+import type { Dispatch, SetStateAction } from 'react';
+import type { ITableDetail } from 'src/api/interfaces';
 import { Button } from '../Button';
 
 export function FullDetailInfo({
@@ -85,7 +85,7 @@ export function FullDetailInfo({
           >
             {detail.graphicalInterpretation.map((grphInt) => (
               <Box>
-                <img src={grphInt.schemaImage} alt="Graphical interpretation" style={{ height: 200 }} />
+                <img src={grphInt.schemaImage} alt="Graphical interpretation" style={{ width: '60%' }} />
                 {grphInt.imageDetails.map((item) => (
                   <div>
                     {item.schemePointerNumber} - {item.schemePointerDescription}

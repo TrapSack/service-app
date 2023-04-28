@@ -1,0 +1,1 @@
+export { DetailsFilters } from './DetailsFilters';

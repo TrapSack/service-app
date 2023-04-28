@@ -1,9 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import { Box, Grid } from '@mui/material';
-import { useContext, useMemo, useRef, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { ITableDetail, ITablesContainer } from 'src/api/interfaces';
 import { SingleDetail } from '@Components/index';
 import { scrollContext } from '@Context/scrollContext';
+import { DetailsFilters } from '@Components/DetailFilters';
 import { FullDetailInfo } from '../FullDetailInfo';
 
 export function DetailsContainer({ tableContainer }: { tableContainer: ITablesContainer | null }) {
@@ -13,8 +14,11 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
 
   const detailsArray = useMemo(() => {
     if (tableContainer) {
-      return Object.values(tableContainer).reduce((acc, current) => [...acc, ...current], []);
+      const detailsArray = Object.values(tableContainer).reduce((acc, current) => [...acc, ...current], []);
+
+      return detailsArray;
     }
+
     return [];
   }, [tableContainer]);
 
@@ -26,6 +30,7 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
   return (
     <Box>
       {selectedDetail ? <FullDetailInfo detail={selectedDetail} setSelectedDetail={setSelectedDetail} /> : null}
+      <DetailsFilters />
       <Grid container spacing={5} sx={{ padding: '40px' }}>
         {detailsArray.map((detail, index) => (
           <Grid item xs={6} md={3} lg={2} key={index}>
