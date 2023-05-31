@@ -4,44 +4,97 @@ import { Box } from '@mui/system';
 import { useMemo, useState } from 'react';
 import { methods } from './consts';
 
+const initialStage = {
+  type: 0,
+  diversity: 0,
+  group: 0,
+  class: 0,
+  view: 0
+};
+
+type Method = typeof initialStage;
+
+const methodClearField = {
+  type: {},
+  diversity: {
+    type: 0
+  },
+  group: {
+    type: 0,
+    diversity: 0,
+    class: 0,
+    view: 0
+  },
+  class: {
+    type: 0,
+    diversity: 0,
+    view: 0
+  },
+  view: {
+    type: 0,
+    diversity: 0
+  }
+};
+
+const numsToSymbols = new Map(
+  Object.entries({
+    1: 'А',
+    2: 'Б',
+    3: 'В',
+    4: 'Г',
+    5: 'Д'
+  })
+);
+
+
 export function MethodFilter() {
-  const [methodValues, setMethodValues] = useState({
-    group: '',
-    class: '',
-    view: ''
-  });
+  const [methodValues, setMethodValues] = useState(initialStage);
 
-  const [groupSelectValues, classSelectValues, viewSelectValues] = useMemo(() => {
-    const groupSelectValues = methods.map((m) => ({ title: m.name, value: m.value }));
-    let classSelectValues: { title: string; value: number }[] = [];
-    let viewSelectValues: { title: string; value: number }[] = [];
+  const [groupSelectValues, classSelectValues, viewSelectValues, diversitySelectValues, typeSelectValues] =
+    useMemo(() => {
+      const groupSelectValues = methods.map((m) => ({ title: m.name, value: m.value }));
+      let classSelectValues: { title: string; value: number }[] = [];
+      let viewSelectValues: { title: string; value: number }[] = [];
+      let diversitySelectValues: { title: string; value: number }[] = [];
+      let typeSelectValues: { title: string; value: number }[] = [];
 
-    if (methodValues.group) {
-      const foundMethod = methods.find((m) => m.value === Number(methodValues.group));
+      if (methodValues.group) {
+        const foundMethod = methods.find((m) => m.value === Number(methodValues.group));
 
-      if (foundMethod) {
-        classSelectValues = foundMethod.children.map((cls) => ({ title: cls.name, value: cls.value }));
+        if (foundMethod) {
+          classSelectValues = foundMethod.children.map((cls) => ({ title: cls.name, value: cls.value }));
 
-        if (methodValues.class) {
-          const foundClass = foundMethod.children.find((cls) => cls.value === Number(methodValues.class));
+          if (methodValues.class) {
+            const foundClass = foundMethod.children.find((cls) => cls.value === methodValues.class);
 
-          if (foundClass) {
-            viewSelectValues = foundClass.children.map((v) => ({ title: v.name, value: v.value }));
+            if (foundClass && foundClass.children) {
+              viewSelectValues = foundClass.children.map((v) => ({ title: v.name, value: v.value }));
+
+              const foundView = foundClass.children.find((v) => v.value === methodValues.view);
+
+              if (foundView && foundView?.children) {
+                diversitySelectValues = foundView?.children.map((d) => ({ title: d.name, value: d.value }));
+
+                const foundDiversity = foundView.children.find((d) => d.value === methodValues.diversity);
+
+                if (foundDiversity && foundDiversity.children) {
+                  typeSelectValues = foundDiversity.children.map((t) => ({ title: t.name, value: t.value }));
+                }
+              }
+            }
           }
         }
       }
-    }
 
-    return [groupSelectValues, classSelectValues, viewSelectValues];
-  }, [methodValues]);
+      return [groupSelectValues, classSelectValues, viewSelectValues, diversitySelectValues, typeSelectValues];
+    }, [methodValues]);
 
-  const handleChangeMethod = (e: SelectChangeEvent<string>, type: 'group' | 'class' | 'view') => {
-    console.log(e.target.value);
-    setMethodValues((prev) => ({
-      group: type === 'group' ? e.target.value : prev.group,
-      class: type === 'class' ? e.target.value : type === 'group' ? '' : prev.class,
-      view: type === 'view' ? e.target.value : type === 'group' || type === 'class' ? '' : prev.view
-    }));
+  const handleChangeMethod = (e: SelectChangeEvent<number>, type: keyof typeof methodValues) => {
+    // eslint-disable-next-line no-undef
+    const nnnmethodValues = structuredClone(methodValues);
+    const newMethodValues = Object.assign(nnnmethodValues, { ...methodClearField[type], [type]: e.target.value });
+
+    setMethodValues(newMethodValues);
   };
 
   return (
@@ -71,7 +124,7 @@ export function MethodFilter() {
               id="class"
               value={methodValues.class}
               sx={{ width: '100%' }}
-              label="Группа"
+              label="Класс"
               onChange={(e) => handleChangeMethod(e, 'class')}
               disabled={!methodValues.group}
             >
@@ -87,11 +140,43 @@ export function MethodFilter() {
               id="view"
               value={methodValues.view}
               sx={{ width: '100%' }}
-              label="Группа"
+              label="Вид"
               disabled={!methodValues.class}
               onChange={(e) => handleChangeMethod(e, 'view')}
             >
               {viewSelectValues.map((value) => (
+                <MenuItem value={value.value}>{value.title}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ width: '10%' }}>
+            <InputLabel id="diversity">Разновидность</InputLabel>
+            <Select
+              labelId="diversity"
+              id="diversity"
+              value={methodValues.diversity}
+              sx={{ width: '100%' }}
+              label="Разновидность"
+              disabled={!methodValues.view}
+              onChange={(e) => handleChangeMethod(e, 'diversity')}
+            >
+              {diversitySelectValues.map((value) => (
+                <MenuItem value={value.value}>{value.title}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ width: '10%' }}>
+            <InputLabel id="type">Тип</InputLabel>
+            <Select
+              labelId="type"
+              id="type"
+              value={methodValues.type}
+              sx={{ width: '100%' }}
+              label="Тип"
+              disabled={!methodValues.diversity}
+              onChange={(e) => handleChangeMethod(e, 'type')}
+            >
+              {typeSelectValues.map((value) => (
                 <MenuItem value={value.value}>{value.title}</MenuItem>
               ))}
             </Select>
