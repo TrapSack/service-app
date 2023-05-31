@@ -39,9 +39,7 @@ export function MethodFilter() {
     console.log(e.target.value);
     setMethodValues((prev) => ({
       group: type === 'group' ? e.target.value : prev.group,
-      // eslint-disable-next-line no-nested-ternary
       class: type === 'class' ? e.target.value : type === 'group' ? '' : prev.class,
-      // eslint-disable-next-line no-nested-ternary
       view: type === 'view' ? e.target.value : type === 'group' || type === 'class' ? '' : prev.view
     }));
   };
