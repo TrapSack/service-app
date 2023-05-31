@@ -36,6 +36,7 @@
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-var-requires": "warn",
         "no-unused-vars":0,
+        "no-nested-ternary":0,
         // react
         "react/react-in-jsx-scope":0,
         "react/jsx-no-useless-fragment":0,
