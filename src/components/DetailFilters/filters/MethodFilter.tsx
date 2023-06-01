@@ -1,7 +1,7 @@
 import { Button } from '@Components/Button';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { Box } from '@mui/system';
-import { useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { methods } from './consts';
 
 const initialStage = {
@@ -46,8 +46,14 @@ const numsToSymbols = new Map(
   })
 );
 
+const getResultString = (methodValues: Method) => {
+  const type = numsToSymbols.get(methodValues.type.toString().toLowerCase()) || '0';
+  const diversity = numsToSymbols.get(methodValues.diversity.toString()) || '0';
 
-export function MethodFilter() {
+  return `${methodValues.group}-${methodValues.class}-${methodValues.view}-${diversity}-${type}`;
+};
+
+export function MethodFilter({ setCodeString }: { setCodeString: Dispatch<SetStateAction<string | null>> }) {
   const [methodValues, setMethodValues] = useState(initialStage);
 
   const [groupSelectValues, classSelectValues, viewSelectValues, diversitySelectValues, typeSelectValues] =
