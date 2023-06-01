@@ -31,7 +31,7 @@ export default ({ command }: ConfigEnv): UserConfig => {
         rollupOptions: {}
       },
       server: {
-        port: process.env.PORT === undefined ? 3000 : +process.env.PORT
+        port: !process.env.PORT ? 3000 : +process.env.PORT
       },
       optimizeDeps: {
         exclude: ['path']

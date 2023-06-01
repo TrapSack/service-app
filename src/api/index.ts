@@ -5,7 +5,7 @@ import { ITablesContainer } from './interfaces';
 type QueryString = string | string[] | number;
 
 const _api = axios.create({
-  baseURL: 'http://localhost:8801/'
+  baseURL: 'http://localhost:8804/'
 });
 
 const get = async <T = never>(url: string, query?: any) => {
