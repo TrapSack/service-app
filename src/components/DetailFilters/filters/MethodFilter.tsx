@@ -1,5 +1,5 @@
 import { Button } from '@Components/Button';
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { methods } from './consts';
@@ -45,9 +45,18 @@ const numsToSymbols = new Map(
     5: 'Д'
   })
 );
+const numsToSymbolsLC = new Map(
+  Object.entries({
+    1: 'а',
+    2: 'б',
+    3: 'в',
+    4: 'г',
+    5: 'д'
+  })
+);
 
 const getResultString = (methodValues: Method) => {
-  const type = numsToSymbols.get(methodValues.type.toString().toLowerCase()) || '0';
+  const type = numsToSymbolsLC.get(methodValues.type.toString().toLowerCase()) || '0';
   const diversity = numsToSymbols.get(methodValues.diversity.toString()) || '0';
 
   return `${methodValues.group}-${methodValues.class}-${methodValues.view}-${diversity}-${type}`;
@@ -101,6 +110,11 @@ export function MethodFilter({ setCodeString }: { setCodeString: Dispatch<SetSta
     const newMethodValues = Object.assign(nnnmethodValues, { ...methodClearField[type], [type]: e.target.value });
 
     setMethodValues(newMethodValues);
+  };
+
+  const onClick = () => {
+    const code = getResultString(methodValues);
+    setCodeString(code);
   };
 
   return (
@@ -188,7 +202,10 @@ export function MethodFilter({ setCodeString }: { setCodeString: Dispatch<SetSta
             </Select>
           </FormControl>
         </Box>
-        <Button sx={{ mt: '20px' }}>Применить фильтры</Button>
+        <Typography>{getResultString(methodValues)}</Typography>
+        <Button sx={{ mt: '20px' }} onClick={onClick}>
+          Применить фильтры
+        </Button>
       </form>
     </Box>
   );
