@@ -2,7 +2,7 @@
 import { Box, Grid } from '@mui/material';
 import { useContext, useMemo, useState } from 'react';
 import { ITableDetail, ITablesContainer } from 'src/api/interfaces';
-import { SingleDetail } from '@Components/index';
+import { ChartModal, SingleDetail } from '@Components/index';
 import { scrollContext } from '@Context/scrollContext';
 import { DetailsFilters } from '@Components/DetailFilters';
 import { FullDetailInfo } from '../FullDetailInfo';
@@ -37,6 +37,7 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
     <Box>
       {selectedDetail ? <FullDetailInfo detail={selectedDetail} setSelectedDetail={setSelectedDetail} /> : null}
       <DetailsFilters setCodeString={setCodeString} />
+      <ChartModal />
       <Grid container spacing={5} sx={{ padding: '40px' }}>
         {detailsArray.map((detail, index) => (
           <Grid item xs={6} md={3} lg={2} key={index}>
