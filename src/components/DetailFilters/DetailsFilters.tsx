@@ -4,7 +4,7 @@ import { Radio } from '@mui/material';
 import { Button } from '..';
 import { MethodFilter, OtherFilter } from './filters';
 
-const filterTypes = ['Метод', 'Другое..'] as const;
+const filterTypes = ['Метод'] as const;
 
 export function DetailsFilters({ setCodeString }: { setCodeString: Dispatch<SetStateAction<string | null>> }) {
   const [openMain, setOpenMain] = useState(false);

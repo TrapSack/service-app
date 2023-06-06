@@ -9,6 +9,11 @@ export interface Scheme {
   simplicity: number;
   tech: number;
 }
+
+type DominanceIndex = {
+  [key: string]: string;
+};
+
 const schemes: Scheme[] = [
   { id: 'scheme1', name: 'Схема 1', price: 1, accuracy: 0, simplicity: 1, tech: 0 },
   { id: 'scheme2', name: 'Схема 2', price: 0, accuracy: 1, simplicity: 0, tech: 1 },
@@ -16,18 +21,20 @@ const schemes: Scheme[] = [
 ];
 
 export const calculateDominanceResult = (schemes: Scheme[]) => {
-  function calculateDominanceIndex(schemes: Scheme[], property: keyof Scheme): Record<number, number> {
-    const dominanceIndexes: Record<number, number> = {};
+  function calculateDominanceIndex(schemes: Scheme[], property: keyof Scheme) {
+    const dominanceIndexes: DominanceIndex = {};
 
     for (let i = 0; i < schemes.length; i++) {
       let count = 0;
+
       for (let j = 0; j < schemes.length; j++) {
         if (schemes[i][property] > schemes[j][property]) {
           count++;
         }
       }
+
       const dominanceIndex = count / (schemes.length - 1);
-      dominanceIndexes[schemes[i].id as any] = dominanceIndex;
+      dominanceIndexes[`${schemes[i].id}`] = dominanceIndex;
     }
 
     return dominanceIndexes;
@@ -36,7 +43,7 @@ export const calculateDominanceResult = (schemes: Scheme[]) => {
   const properties: (keyof Scheme)[] = ['price', 'accuracy', 'simplicity', 'tech'];
 
   // Рассчитываем индексы превалирования для каждого свойства
-  const dominanceIndexes: Record<keyof Scheme, Record<number, number>> = {
+  const dominanceIndexes = {
     id: {},
     name: {},
     price: {},
@@ -49,7 +56,7 @@ export const calculateDominanceResult = (schemes: Scheme[]) => {
     dominanceIndexes[property] = calculateDominanceIndex(schemes, property);
   });
 
-  const results: Record<keyof Scheme, Record<number, number>> = dominanceIndexes;
+  const results = dominanceIndexes;
 
   return results;
 };

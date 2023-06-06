@@ -202,7 +202,7 @@ export function MethodFilter({ setCodeString }: { setCodeString: Dispatch<SetSta
             </Select>
           </FormControl>
         </Box>
-        <Typography>{getResultString(methodValues)}</Typography>
+        {/* <Typography>{getResultString(methodValues)}</Typography> */}
         <Button sx={{ mt: '20px' }} onClick={onClick}>
           Применить фильтры
         </Button>

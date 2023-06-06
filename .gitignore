@@ -9,6 +9,9 @@ dist-ssr
 /dist
 /src/out
 
+package-lock.json
+
+
 # debug
 npm-debug.log*
 yarn-debug.log*

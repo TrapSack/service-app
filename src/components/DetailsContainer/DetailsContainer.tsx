@@ -10,7 +10,7 @@ import { scrollContext } from '@Context/scrollContext';
 import { v4 as uuid } from 'uuid';
 import { DetailsFilters } from '@Components/DetailFilters';
 import CoefsModal from '@Components/CoefsModal/CoefsModal';
-import { SchemeDataStacked } from '@Components/ChartModal/ChartModal';
+import { SchemeDataStacked } from '@Components/DetailsChart/DetailsChart';
 import { FullDetailInfo } from '../FullDetailInfo';
 import { Scheme, calculateDominanceResult } from './helpers';
 
@@ -30,6 +30,7 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
   const [mergedContainer, setMergedContainer] = useState<ITableDetail[] | null>(null);
   const [calculatingResults, setCalculatingResults] = useState<ResultData[] | null>(null);
   const [chartData, setChartData] = useState<SchemeDataStacked[] | null>(null);
+  const [openChartModal, setOpenChartModal] = useState(false);
   // TODO: add modal open state, connect data with chart modal
 
   const { scrollToTop } = useContext(scrollContext);
@@ -60,6 +61,8 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
 
   const handleResult = (data: ResultData[]) => {
     setCalculatingResults(data);
+    setIsOpen(false);
+    setOpenChartModal(true);
   };
 
   useEffect(() => {
@@ -102,18 +105,19 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
     }
   }, [detailsArray]);
 
+  console.log(chartData);
+
   return (
     <Box>
       {selectedDetail ? <FullDetailInfo detail={selectedDetail} setSelectedDetail={setSelectedDetail} /> : null}
       <DetailsFilters setCodeString={setCodeString} />
-      <ChartModal />
+      <ChartModal data={chartData} open={openChartModal} setIsOpen={setOpenChartModal} />
       {tableContainer && detailsArray.length !== 160 ? (
         <Box
           sx={{
             paddingInline: 5
           }}
         >
-          <Typography>detailsArray: {detailsArray.length}</Typography>
           <Button
             onClick={() => {
               setIsOpen(true);
@@ -129,7 +133,6 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
         isOpen={isOpen}
         handleClose={handleClose}
       />
-      {/* <ChartModal open={true} /> */}
       <Grid container spacing={5} sx={{ padding: '40px' }}>
         {detailsArray.map((detail, index) => (
           <Grid item xs={6} md={3} lg={2} key={index}>
