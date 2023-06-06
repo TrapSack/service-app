@@ -16,6 +16,8 @@ export function Input({ name, onChange, placeholder, type, value, sx, ...other }
 
   const defaultStyleConfig: SxProps<Theme> = {
     width: '100%',
+    paddingInline: 2,
+    border: '1px solid #000',
     'input::placeholder': {
       color: '#fff',
       fontSize: '16px'

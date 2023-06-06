@@ -19,8 +19,6 @@ export default function HomePage() {
     }
   }, []);
 
-  console.log(tables);
-
   return (
     <Box>
       <DetailsContainer tableContainer={tables} />

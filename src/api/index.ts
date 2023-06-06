@@ -1,5 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import axios from 'axios';
 import qs from 'qs';
+import { v4 as uuid } from 'uuid';
 import { ITablesContainer } from './interfaces';
 
 type QueryString = string | string[] | number;
@@ -11,7 +13,7 @@ const _api = axios.create({
 const get = async <T = never>(url: string, query?: any) => {
   const params = qs.stringify(query);
 
-  const response = await _api.get<T>(`${url}?${params}`);
+  const response: any = await _api.get<T>(`${url}?${params}`);
 
   return response;
 };

@@ -1,18 +1,20 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable spaced-comment */
 import { BarElement, CategoryScale, ChartData, ChartDataset, Chart as ChartJS, LinearScale } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
 type PropertyName = 'Точность' | 'Устойчивость' | 'Стоимость' | 'Простота';
 
-type ChartDataProperty = {
+export type ChartDataProperty = {
   name: PropertyName;
   value: number;
 };
-type SchemeDataSingle = {
+export type SchemeDataSingle = {
   schemeName: string;
   schemeCoefficient: number;
 };
 
-type SchemeDataStacked = {
+export type SchemeDataStacked = {
   schemeName: string;
   schemeCoefficient: ChartDataProperty[];
 };
@@ -122,6 +124,7 @@ export function ChartModal({
       current.schemeCoefficient.forEach((cef) => {
         if (acc) {
           if (cef.name in acc) {
+            //@ts-ignore
             acc[cef.name].push(cef.value);
           } else {
             acc[cef.name] = [cef.value];

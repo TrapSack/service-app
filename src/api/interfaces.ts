@@ -7,6 +7,7 @@ export interface ITableDetail {
   graphicalInterpretation: IMeasurementSchema[];
   analyticalModels: IAnalyticalModel[];
   taskCodes: string[];
+  id: string;
 }
 
 export interface ITablesContainer {

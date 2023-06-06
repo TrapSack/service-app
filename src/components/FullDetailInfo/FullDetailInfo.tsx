@@ -11,8 +11,6 @@ export function FullDetailInfo({
   detail: ITableDetail;
   setSelectedDetail: Dispatch<SetStateAction<ITableDetail | null>>;
 }) {
-  console.log(detail);
-
   return (
     <Box sx={{ padding: '40px' }}>
       <Box sx={{ position: 'relative', marginLeft: 'auto', width: '15%' }}>
