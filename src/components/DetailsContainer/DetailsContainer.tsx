@@ -30,6 +30,7 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
   const [mergedContainer, setMergedContainer] = useState<ITableDetail[] | null>(null);
   const [calculatingResults, setCalculatingResults] = useState<ResultData[] | null>(null);
   const [chartData, setChartData] = useState<SchemeDataStacked[] | null>(null);
+  // TODO: add modal open state, connect data with chart modal
 
   const { scrollToTop } = useContext(scrollContext);
 
@@ -128,6 +129,7 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
         isOpen={isOpen}
         handleClose={handleClose}
       />
+      {/* <ChartModal open={true} /> */}
       <Grid container spacing={5} sx={{ padding: '40px' }}>
         {detailsArray.map((detail, index) => (
           <Grid item xs={6} md={3} lg={2} key={index}>
