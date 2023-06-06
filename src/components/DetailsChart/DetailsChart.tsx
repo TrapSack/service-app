@@ -1,4 +1,4 @@
-import { BarElement, CategoryScale, ChartData, ChartDataset, Chart as ChartJS, LinearScale } from 'chart.js';
+import { BarElement, CategoryScale, ChartData, ChartDataset, Chart as ChartJS, Legend, LinearScale } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
 type PropertyName = 'Точность' | 'Устойчивость' | 'Стоимость' | 'Простота';
@@ -7,12 +7,12 @@ type ChartDataProperty = {
   name: PropertyName;
   value: number;
 };
-type SchemeDataSingle = {
+export type SchemeDataSingle = {
   schemeName: string;
   schemeCoefficient: number;
 };
 
-type SchemeDataStacked = {
+export type SchemeDataStacked = {
   schemeName: string;
   schemeCoefficient: ChartDataProperty[];
 };
@@ -76,31 +76,13 @@ type DataAccumulator = {
 const isSingleDataProperty = (data: SchemeDataStacked[] | SchemeDataSingle[]): data is SchemeDataSingle[] =>
   typeof data[0].schemeCoefficient === 'number';
 
-export function ChartModal({
-  data = initialChartDataSingleValues
+export function DetailsChart({
+  data = initialChartDataStackedValues,
+  propertyName = '2131'
 }: {
   data: SchemeDataStacked[] | SchemeDataSingle[];
+  propertyName?: string;
 }) {
-  const chartData: ChartData<'bar', (number | [number, number] | null)[], unknown> = {
-    labels: ['123', '123'],
-    datasets: [
-      {
-        label: 'My First Dataset',
-        data: [65, 59],
-        backgroundColor: ['rgba(255, 99, 132)', 'rgba(255, 159, 64)'],
-        borderColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)'],
-        borderWidth: 1
-      },
-      {
-        label: 'My Second Dataset',
-        data: [65, 59],
-        backgroundColor: ['rgba(255, 99, 132)', 'rgba(255, 159, 64)'],
-        borderColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)'],
-        borderWidth: 1
-      }
-    ]
-  };
-
   const generateDataSets = (
     data: SchemeDataStacked[] | SchemeDataSingle[]
   ): ChartData<'bar', (number | [number, number] | null)[], unknown> => {
@@ -108,7 +90,7 @@ export function ChartModal({
 
     if (isSingleDataProperty(data)) {
       const dataSet: ChartDataset<'bar', (number | [number, number] | null)[]> = {
-        label: 'dataSet',
+        label: propertyName || '',
         data: data.map((item) => item.schemeCoefficient),
         backgroundColor: Array.from<string>({ length: data.length }).fill('rgb(255, 159, 64)')
       };
@@ -122,7 +104,7 @@ export function ChartModal({
       current.schemeCoefficient.forEach((cef) => {
         if (acc) {
           if (cef.name in acc) {
-            acc[cef.name].push(cef.value);
+            acc[cef.name]?.push(cef.value);
           } else {
             acc[cef.name] = [cef.value];
           }
@@ -134,6 +116,7 @@ export function ChartModal({
 
     const dataSets: ChartDataset<'bar', (number | [number, number] | null)[]>[] = Object.entries(coefsArray).map(
       ([name, data]) => ({
+        label: name,
         data,
         backgroundColor: Array.from<string>({ length: data.length }).fill(DATA_COLORS[name as PropertyName])
       })
@@ -147,7 +130,7 @@ export function ChartModal({
 
   const dataSess = generateDataSets(data);
 
-  ChartJS.register(CategoryScale, LinearScale, BarElement);
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Legend);
 
   return (
     <div>

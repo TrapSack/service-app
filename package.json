@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:vite\" \" npm run dev:electron\" \"npm run server \"",
     "dev:vite": "vite",
-    "server": "json-server --watch bd_full.json -p 8804",
+    "server": "json-server --watch bd_full.json -p 8810",
     "dev:electron": "npm run build:electron && electron .",
     "build": "npm run build:vite && npm run build:electron",
     "build:vite": "vite build",

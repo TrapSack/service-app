@@ -10,6 +10,7 @@ import { FullDetailInfo } from '../FullDetailInfo';
 export function DetailsContainer({ tableContainer }: { tableContainer: ITablesContainer | null }) {
   const [selectedDetail, setSelectedDetail] = useState<ITableDetail | null>(null);
   const [codeString, setCodeString] = useState<string | null>(null);
+  // TODO: add modal open state, connect data with chart modal
 
   const { scrollToTop } = useContext(scrollContext);
 
@@ -37,7 +38,7 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
     <Box>
       {selectedDetail ? <FullDetailInfo detail={selectedDetail} setSelectedDetail={setSelectedDetail} /> : null}
       <DetailsFilters setCodeString={setCodeString} />
-      <ChartModal />
+      {/* <ChartModal open={true} /> */}
       <Grid container spacing={5} sx={{ padding: '40px' }}>
         {detailsArray.map((detail, index) => (
           <Grid item xs={6} md={3} lg={2} key={index}>
