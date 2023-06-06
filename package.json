@@ -18,7 +18,7 @@
   },
   "productName": "vite-reactts-electron-starter",
   "scripts": {
-    "dev": "concurrently \"npm run dev:vite\" \" npm run dev:electron\" \"npm run server \"",
+    "dev": "concurrently \"npm run dev:vite\" \" npm run dev:electron\"",
     "dev:vite": "vite",
     "server": "json-server --watch bd_full.json -p 8810",
     "dev:electron": "npm run build:electron && electron .",

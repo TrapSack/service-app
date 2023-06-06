@@ -12,58 +12,15 @@ export type ChartDataProperty = {
 };
 export type SchemeDataSingle = {
   schemeName: string;
+  schemeLabel: string;
   schemeCoefficient: number;
 };
 
 export type SchemeDataStacked = {
   schemeName: string;
+  schemeLabel: string;
   schemeCoefficient: ChartDataProperty[];
 };
-
-const initialChartDataSingleValues: SchemeDataSingle[] = [
-  {
-    schemeName: '1',
-    schemeCoefficient: 0.6
-  },
-  {
-    schemeName: '2',
-    schemeCoefficient: 0.2
-  },
-  {
-    schemeName: '3',
-    schemeCoefficient: 0.3
-  }
-];
-
-const initialChartDataStackedValues: SchemeDataStacked[] = [
-  {
-    schemeName: '1',
-    schemeCoefficient: [
-      { name: 'Точность', value: 0.2 },
-      { name: 'Устойчивость', value: 0.4 },
-      { name: 'Стоимость', value: 0.6 },
-      { name: 'Простота', value: 0.5 }
-    ]
-  },
-  {
-    schemeName: '2',
-    schemeCoefficient: [
-      { name: 'Точность', value: 0.1 },
-      { name: 'Устойчивость', value: 0.6 },
-      { name: 'Стоимость', value: 0.4 },
-      { name: 'Простота', value: 0.8 }
-    ]
-  },
-  {
-    schemeName: '3',
-    schemeCoefficient: [
-      { name: 'Точность', value: 0.3 },
-      { name: 'Устойчивость', value: 0.4 },
-      { name: 'Стоимость', value: 0.7 },
-      { name: 'Простота', value: 0.9 }
-    ]
-  }
-];
 
 enum DATA_COLORS {
   'Точность' = '#094f02',
@@ -80,7 +37,7 @@ const isSingleDataProperty = (data: SchemeDataStacked[] | SchemeDataSingle[]): d
   typeof data[0].schemeCoefficient === 'number';
 
 export function DetailsChart({
-  data = initialChartDataStackedValues,
+  data,
   propertyName = '2131'
 }: {
   data: SchemeDataStacked[] | SchemeDataSingle[];
@@ -89,7 +46,7 @@ export function DetailsChart({
   const generateDataSets = (
     data: SchemeDataStacked[] | SchemeDataSingle[]
   ): ChartData<'bar', (number | [number, number] | null)[], unknown> => {
-    const labels = data.map((item) => item.schemeName);
+    const labels = data.map((item) => item.schemeLabel);
 
     if (isSingleDataProperty(data)) {
       const dataSet: ChartDataset<'bar', (number | [number, number] | null)[]> = {

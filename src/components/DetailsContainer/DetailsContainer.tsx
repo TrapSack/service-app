@@ -81,7 +81,8 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
 
     const schemes = calculateDominanceResult(parsedCalculatingResults);
     const schemeForChart: SchemeDataStacked[] = calculatingResults.map((r, index) => ({
-      schemeName: `Схема ${index + 1  }`,
+      schemeName: r.id,
+      schemeLabel: `Схема ${index + 1}`,
       schemeCoefficient: [
         { name: 'Простота', value: schemes.simplicity[`${r.id}`] as number },
         { name: 'Стоимость', value: schemes.price[`${r.id}`] },

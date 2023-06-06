@@ -133,7 +133,8 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                     <Input
                       inputProps={{
                         min: 0,
-                        max: 1
+                        max: 1,
+                        step: 0.1
                       }}
                       value={values[`price-${d.id}`]}
                       defaultValue={0}
@@ -150,7 +151,8 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                     <Input
                       inputProps={{
                         min: 0,
-                        max: 1
+                        max: 1,
+                        step: 0.1
                       }}
                       value={values[`accuracy-${d.id}`]}
                       defaultValue={0}
@@ -167,7 +169,8 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                     <Input
                       inputProps={{
                         min: 0,
-                        max: 1
+                        max: 1,
+                        step: 0.1
                       }}
                       value={values[`simplicity-${d.id}`]}
                       defaultValue={0}
@@ -184,7 +187,8 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                     <Input
                       inputProps={{
                         min: 0,
-                        max: 1
+                        max: 1,
+                        step: 0.1
                       }}
                       value={values[`tech-${d.id}`]}
                       name={`tech-${d.id}`}
