@@ -20,12 +20,13 @@ export function ChartModal({
     >
       <Box
         sx={{
-          width: '600px',
+          width: '60vw',
+          minHeight: '70vh',
           bgcolor: '#fff',
           padding: '30px'
         }}
       >
-        <Box sx={{ height: '300px', border: '1px solid #000', padding: '15px' }}>
+        <Box sx={{ height: '60vh', border: '1px solid #000', padding: '15px' }}>
           <DetailsChart data={data} />
         </Box>
         <Button sx={{ mt: 5 }} onClick={() => setIsOpen(false)}>

@@ -4,16 +4,16 @@ export const useStyles = () => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
     bgcolor: 'white',
     boxShadow: 24,
     border: 'none',
-    minHeight: 400,
+    width: '60vw',
+    minHeight: '70vh',
     overflowY: 'scroll',
     p: 4,
     '& form': {
       overflowY: 'scroll',
-      height: 400,
+      height: '70vh',
       pb: 4
     }
   }

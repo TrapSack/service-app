@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Modal, Typography, Box, FormControl, Checkbox, FormControlLabel } from '@mui/material';
+import { Modal, Typography, Box, FormControl, Checkbox, FormControlLabel, Stack } from '@mui/material';
 
 import React, { useMemo, useState } from 'react';
 import { useFormik } from 'formik';
@@ -63,11 +63,12 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
     >
       <Box sx={classes.modal}>
         <form onSubmit={handleSubmit}>
-          <FormControl>
+          <FormControl sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <FormControlLabel
               control={
                 <Checkbox
-                  value={!priceCheckbox}
+                  value={priceCheckbox}
+                  checked={priceCheckbox}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     setPriceCheckbox(event.target.checked);
                   }}
@@ -78,7 +79,8 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
             <FormControlLabel
               control={
                 <Checkbox
-                  value={!accuracyCheckbox}
+                  value={accuracyCheckbox}
+                  checked={accuracyCheckbox}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     setAccuracyCheckbox(event.target.checked);
                   }}
@@ -89,7 +91,8 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
             <FormControlLabel
               control={
                 <Checkbox
-                  value={!simplicityCheckbox}
+                  value={simplicityCheckbox}
+                  checked={simplicityCheckbox}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     setSimplicityCheckbox(event.target.checked);
                   }}
@@ -100,7 +103,8 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
             <FormControlLabel
               control={
                 <Checkbox
-                  value={!techCheckbox}
+                  value={techCheckbox}
+                  checked={techCheckbox}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     setTechCheckbox(event.target.checked);
                   }}
@@ -110,8 +114,10 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
             />
           </FormControl>
           {details.map((d) => (
-            <Box>
-              <img src={d.measurementSchema.schemaImage} id={d.measurementSchema.schemaImage} alt="" />
+            <Box sx={{ borderBottom: '1px solid grey', p: 3 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <img src={d.measurementSchema.schemaImage} id={d.measurementSchema.schemaImage} alt="" />
+              </Box>
 
               <Box
                 sx={{
@@ -130,6 +136,7 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                         max: 1
                       }}
                       value={values[`price-${d.id}`]}
+                      defaultValue={0}
                       name={`price-${d.id}`}
                       onChange={handleChange}
                       placeholder="Цена"
@@ -146,6 +153,7 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                         max: 1
                       }}
                       value={values[`accuracy-${d.id}`]}
+                      defaultValue={0}
                       name={`accuracy-${d.id}`}
                       onChange={handleChange}
                       placeholder="Точность"
@@ -162,6 +170,7 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                         max: 1
                       }}
                       value={values[`simplicity-${d.id}`]}
+                      defaultValue={0}
                       name={`simplicity-${d.id}`}
                       onChange={handleChange}
                       placeholder="Протота конструктивного исполнения"
@@ -179,6 +188,7 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
                       }}
                       value={values[`tech-${d.id}`]}
                       name={`tech-${d.id}`}
+                      defaultValue={0}
                       onChange={handleChange}
                       placeholder="Технологичность"
                       type="number"
@@ -188,17 +198,18 @@ const CoefsModal = ({ handleClose, isOpen, details, setCalculatingResults }: Coe
               </Box>
             </Box>
           ))}
-          <Button
-            sx={{
-              position: 'absolute',
-              bottom: 20,
-              width: '400px !important'
-            }}
-            size="sm"
-            type="submit"
-          >
-            Рассчитать
-          </Button>
+          <Stack display="flex" flexDirection="row" alignItems="center" justifyContent="center" mt={3}>
+            <Button
+              sx={{
+                width: 120,
+                height: 50
+              }}
+              size="sm"
+              type="submit"
+            >
+              Рассчитать
+            </Button>
+          </Stack>
         </form>
       </Box>
     </Modal>

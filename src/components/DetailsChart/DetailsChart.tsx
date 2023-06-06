@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable spaced-comment */
+import { Box } from '@mui/system';
 import { BarElement, CategoryScale, ChartData, ChartDataset, Chart as ChartJS, Legend, LinearScale } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -135,7 +136,14 @@ export function DetailsChart({
   ChartJS.register(CategoryScale, LinearScale, BarElement, Legend);
 
   return (
-    <div>
+    <Box
+      sx={{
+        '& canvas': {
+          width: '60vw',
+          minHeight: '40vh'
+        }
+      }}
+    >
       <Bar
         data={dataSess}
         options={{
@@ -149,6 +157,6 @@ export function DetailsChart({
           }
         }}
       />
-    </div>
+    </Box>
   );
 }
