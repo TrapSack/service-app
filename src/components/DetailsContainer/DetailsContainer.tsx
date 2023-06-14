@@ -13,6 +13,7 @@ import CoefsModal from '@Components/CoefsModal/CoefsModal';
 import { SchemeDataStacked } from '@Components/DetailsChart/DetailsChart';
 import { FullDetailInfo } from '../FullDetailInfo';
 import { Scheme, calculateDominanceResult } from './helpers';
+import { countCoef } from '../../modules/utils/countCoef';
 
 export type PropsTypes = 'accuracy' | 'price' | 'tech' | 'simplicity';
 
@@ -106,7 +107,7 @@ export function DetailsContainer({ tableContainer }: { tableContainer: ITablesCo
     }
   }, [detailsArray]);
 
-  console.log(chartData);
+  console.log(countCoef('accuracy'));
 
   return (
     <Box>
